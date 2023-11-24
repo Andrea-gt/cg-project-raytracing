@@ -118,11 +118,215 @@ void setUp() {
             "cherryLeaves"
     };
 
-    // Pilar (Left)
-    objects.push_back(new Cube(glm::vec3(0.0f, 0.0f, 0.0f), 1.0f, cherryLeaves));
-    //objects.push_back(new Cube(glm::vec3(-1.0f, 0.0f, -4.0f), 1.0f, ivory));
-    //objects.push_back(new Cube(glm::vec3(1.0f, 0.0f, -4.0f), 1.0f, mirror));
-    //objects.push_back(new Cube(glm::vec3(0.0f, 1.0f, -3.0f), 1.0f, glass));
+    Material cherryPlanks = {
+            Color(255, 255, 255),   // diffuse
+            0.9, // Matte or glossy
+            0.1, // Lower values do not reflect light
+            10.0f, //
+            0.0f, // Reflections
+            0.0f, // Transparency
+            0,
+            128,
+            "cherryPlanks"
+    };
+
+    Material oakLog = {
+            Color(255, 255, 255),   // diffuse
+            0.9, // Matte or glossy
+            0.1, // Lower values do not reflect light
+            10.0f, //
+            0.0f, // Reflections
+            0.0f, // Transparency
+            0,
+            128,
+            "oakLog"
+    };
+
+    Material cherryPlankStair = {
+            Color(255, 255, 255),   // diffuse
+            0.9, // Matte or glossy
+            0.1, // Lower values do not reflect light
+            10.0f, //
+            0.0f, // Reflections
+            0.0f, // Transparency
+            0,
+            64,
+            "cherryPlanks"
+    };
+
+
+    Material cherryDoorT = {
+            Color(255, 255, 255),   // diffuse
+            0.9, // Matte or glossy
+            0.1, // Lower values do not reflect light
+            10.0f, //
+            0.0f, // Reflections
+            0.0f, // Transparency
+            0,
+            128,
+            "cherryDoorT"
+    };
+
+    Material cherryDoorB = {
+            Color(255, 255, 255),   // diffuse
+            0.9, // Matte or glossy
+            0.1, // Lower values do not reflect light
+            10.0f, //
+            0.0f, // Reflections
+            0.0f, // Transparency
+            0,
+            128,
+            "cherryDoorB"
+    };
+
+    Material acaciaLeaves = {
+            Color(255, 255, 255),   // diffuse
+            0.9, // Matte or glossy
+            0.1, // Lower values do not reflect light
+            10.0f, //
+            0.0f, // Reflections
+            0.0f, // Transparency
+            0,
+            128,
+            "acaciaLeaves"
+    };
+
+    Material redStoneLamp = {
+            Color(255, 255, 255),   // diffuse
+            0.9, // Matte or glossy
+            0.1, // Lower values do not reflect light
+            10.0f, //
+            0.0f, // Reflections
+            0.0f, // Transparency
+            0,
+            128,
+            "redStoneLamp"
+    };
+
+    Material Basalt = {
+            Color(255, 255, 255),   // diffuse
+            0.9, // Matte or glossy
+            0.1, // Lower values do not reflect light
+            10.0f, //
+            0.0f, // Reflections
+            0.0f, // Transparency
+            0,
+            128,
+            "basalt"
+    };
+
+    const int gridWidth = 6;
+    const float yOffset = 1.0f;
+
+    // Plank floor & pillars
+    for (int i = -gridWidth / 2; i < gridWidth / 2; ++i) {
+        for (int j = -gridWidth / 2; j < gridWidth / 2; ++j) {
+            float xPos = static_cast<float>(i);
+            float zPos = static_cast<float>(j);
+
+            if ((i == -gridWidth / 2 || i == gridWidth / 2 - 1) && (j == -gridWidth / 2 || j == gridWidth / 2 - 1)) {
+                objects.push_back(new Cube(glm::vec3(xPos, 0, zPos), 1.0f, oakLog));
+                objects.push_back(new Cube(glm::vec3(xPos, yOffset, zPos), 1.0f, oakLog));
+                objects.push_back(new Cube(glm::vec3(xPos, yOffset * 2.0f, zPos), 1.0f, oakLog));
+                objects.push_back(new Cube(glm::vec3(xPos, yOffset * 3.0f, zPos), 1.0f, oakLog));
+            } else {
+                objects.push_back(new Cube(glm::vec3(xPos, 0, zPos), 1.0f, cherryPlanks));
+            }
+        }
+    }
+
+    //Doors
+    const int doorPosX[] = { 0, -1 };  // X positions for the doors
+    const int doorPosZ = 2;  // Z position for the doors
+
+    for (int i = 0; i < 2; ++i) {
+        objects.push_back(new Cube(glm::vec3(doorPosX[i], yOffset, doorPosZ), 1.0f, cherryDoorB));
+        objects.push_back(new Cube(glm::vec3(doorPosX[i], yOffset * 2, doorPosZ), 1.0f, cherryDoorT));
+    }
+
+    // Front planks
+    objects.push_back(new Cube(glm::vec3(0, 0, 3.0f), 1.0f, cherryPlanks));
+    objects.push_back(new Cube(glm::vec3(-1.0f, 0, 3.0f), 1.0f, cherryPlanks));
+    objects.push_back(new Cube(glm::vec3(1.0f, 0, 3.0f), 1.0f, cherryPlanks));
+    objects.push_back(new Cube(glm::vec3(-2.0f, 0, 3.0f), 1.0f, cherryPlanks));
+
+    // Stairs
+    objects.push_back(new Cube(glm::vec3(-0.20, 0, 4.0f), 0.7f, cherryPlankStair));
+    objects.push_back(new Cube(glm::vec3(-0.8f, 0, 4.0f), 0.7f, cherryPlankStair));
+
+    // Front leaves
+    objects.push_back(new Cube(glm::vec3(1.0f, yOffset, 3.0f), 1.0f, acaciaLeaves));
+    objects.push_back(new Cube(glm::vec3(-2.0f, yOffset, 3.0f), 1.0f, acaciaLeaves));
+
+    objects.push_back(new Cube(glm::vec3(1.0f, yOffset * 2.0f, 3.0f), 1.0f, acaciaLeaves));
+    objects.push_back(new Cube(glm::vec3(-2.0f, yOffset * 2.0f, 3.0f), 1.0f, acaciaLeaves));
+
+    objects.push_back(new Cube(glm::vec3(1.0f, 0, 4.0f), 1.0f, acaciaLeaves));
+    objects.push_back(new Cube(glm::vec3(-2.0f, 0, 4.0f), 1.0f, acaciaLeaves));
+
+    objects.push_back(new Cube(glm::vec3(2.0f, 0, 3.0f), 1.0f, acaciaLeaves));
+    objects.push_back(new Cube(glm::vec3(-3.0f, 0, 3.0f), 1.0f, acaciaLeaves));
+
+    for (int z = 2; z >= -3; --z) {
+        objects.push_back(new Cube(glm::vec3(3.0f, 0, static_cast<float>(z)), 1.0f, acaciaLeaves));
+        objects.push_back(new Cube(glm::vec3(-4.0f, 0, static_cast<float>(z)), 1.0f, acaciaLeaves));
+    }
+
+    // Redstone lamps
+    objects.push_back(new Cube(glm::vec3(2.0f, yOffset * 2.0f, 3.0f), 0.5f, redStoneLamp));
+    objects.push_back(new Cube(glm::vec3(-3.0f, yOffset * 2.0f, 3.0f), 0.5f, redStoneLamp));
+
+    // Top planks
+    objects.push_back(new Cube(glm::vec3(0, yOffset * 3, 2.0f), 1.0f, cherryPlanks));
+    objects.push_back(new Cube(glm::vec3(-1, yOffset * 3, 2.0f), 1.0f, cherryPlanks));
+
+    objects.push_back(new Cube(glm::vec3(0, yOffset * 4, 2.0f), 1.0f, cherryPlanks));
+    objects.push_back(new Cube(glm::vec3(-1, yOffset * 4, 2.0f), 1.0f, cherryPlanks));
+
+    objects.push_back(new Cube(glm::vec3(1, yOffset * 3, 2.0f), 1.0f, cherryPlanks));
+    objects.push_back(new Cube(glm::vec3(-2, yOffset * 3, 2.0f), 1.0f, cherryPlanks));
+
+    // Roof;
+    for (int z = 3; z >= -4; --z) {
+        objects.push_back(new Cube(glm::vec3(0, yOffset * 5, static_cast<float>(z)), 1.0f, cherryLeaves));
+        objects.push_back(new Cube(glm::vec3(-1, yOffset * 5, static_cast<float>(z)), 1.0f, cherryLeaves));
+    }
+    for (int z = 3; z >= -4; --z) {
+        objects.push_back(new Cube(glm::vec3(1, yOffset * 4, static_cast<float>(z)), 1.0f, cherryLeaves));
+        objects.push_back(new Cube(glm::vec3(-2, yOffset * 4, static_cast<float>(z)), 1.0f, cherryLeaves));
+    }
+
+    for (int z = 1; z >= -2; --z) {
+        objects.push_back(new Cube(glm::vec3(2, yOffset * 3, static_cast<float>(z)), 1.0f, cherryLeaves));
+        objects.push_back(new Cube(glm::vec3(-3, yOffset * 3, static_cast<float>(z)), 1.0f, cherryLeaves));
+    }
+
+    objects.push_back(new Cube(glm::vec3(2, yOffset * 3, 3.0f), 1.0f, cherryLeaves));
+    objects.push_back(new Cube(glm::vec3(-3, yOffset * 3, 3.0f), 1.0f, cherryLeaves));
+
+    objects.push_back(new Cube(glm::vec3(2, yOffset * 3, -4.0f), 1.0f, cherryLeaves));
+    objects.push_back(new Cube(glm::vec3(-3, yOffset * 3, -4.0f), 1.0f, cherryLeaves));
+
+    // Window walls
+    objects.push_back(new Cube(glm::vec3(2, yOffset, 1.0f), 1.0f, cherryPlanks));
+    objects.push_back(new Cube(glm::vec3(-3, yOffset, 1.0f), 1.0f, cherryPlanks));
+
+    objects.push_back(new Cube(glm::vec3(2, yOffset*2.0f, 1.0f), 1.0f, cherryPlanks));
+    objects.push_back(new Cube(glm::vec3(-3, yOffset*2.0f, 1.0f), 1.0f, cherryPlanks));
+
+    objects.push_back(new Cube(glm::vec3(2, yOffset, -2.0f), 1.0f, cherryPlanks));
+    objects.push_back(new Cube(glm::vec3(-3, yOffset, -2.0f), 1.0f, cherryPlanks));
+
+    objects.push_back(new Cube(glm::vec3(2, yOffset*2.0f, -2.0f), 1.0f, cherryPlanks));
+    objects.push_back(new Cube(glm::vec3(-3, yOffset*2.0f, -2.0f), 1.0f, cherryPlanks));
+
+    // Path
+    for (int z = 3; z <= 5; ++z) {
+        for (int x = 0; x < 2; ++x) {
+            objects.push_back(new Cube(glm::vec3(x * -1.0f, -yOffset, static_cast<float>(z)), 1.0f, Basalt));
+        }
+    }
+
 }
 
 void render() {
@@ -162,6 +366,13 @@ int main(int argc, char* argv[]) {
 
     ImageLoader::init(); // Imageloader for textures
     ImageLoader::loadImage("cherryLeaves", "../textures/cherry_leaves.png");
+    ImageLoader::loadImage("cherryPlanks", "../textures/cherry_planks.png");
+    ImageLoader::loadImage("oakLog", "../textures/oak_log_s.png");
+    ImageLoader::loadImage("cherryDoorB", "../textures/cherry_door_bottom.png");
+    ImageLoader::loadImage("cherryDoorT", "../textures/cherry_door_top.png");
+    ImageLoader::loadImage("acaciaLeaves", "../textures/azalea_leaves.png");
+    ImageLoader::loadImage("redStoneLamp", "../textures/redstone_lamp.png");
+    ImageLoader::loadImage("basalt", "../textures/basalt.png");
 
 
     // Create a window
