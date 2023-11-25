@@ -21,7 +21,7 @@ const int SCREEN_HEIGHT = 600;
 const float ASPECT_RATIO = static_cast<float>(SCREEN_WIDTH) / static_cast<float>(SCREEN_HEIGHT);
 const int MAX_RECURSION = 3;
 const float BIAS = 0.0001f;
-Skybox skybox("../BG/skybox01.jpg");
+Skybox skybox("../BG/skybox.png");
 
 SDL_Renderer* renderer;
 std::vector<Object*> objects;
@@ -215,6 +215,18 @@ void setUp() {
             "basalt"
     };
 
+    Material Glass = {
+            Color(255, 255, 255),   // diffuse
+            1.0, // Matte or glossy
+            0.3, // Lower values do not reflect light
+            10.0f, //
+            0.0f, // Reflections
+            0.9f, // Transparency
+            1.5f,
+            128,
+            "glass"
+    };
+
     const int gridWidth = 6;
     const float yOffset = 1.0f;
 
@@ -320,6 +332,21 @@ void setUp() {
     objects.push_back(new Cube(glm::vec3(2, yOffset*2.0f, -2.0f), 1.0f, cherryPlanks));
     objects.push_back(new Cube(glm::vec3(-3, yOffset*2.0f, -2.0f), 1.0f, cherryPlanks));
 
+    // Window
+    objects.push_back(new Cube(glm::vec3(2, yOffset, 0.0f), 1.0f, Glass));
+    objects.push_back(new Cube(glm::vec3(2, yOffset*2, 0.0f), 1.0f, Glass));
+
+    objects.push_back(new Cube(glm::vec3(2, yOffset, -1.0f), 1.0f, Glass));
+    objects.push_back(new Cube(glm::vec3(2, yOffset*2, -1.0f), 1.0f, Glass));
+
+
+    objects.push_back(new Cube(glm::vec3(-3, yOffset, 0.0f), 1.0f, Glass));
+    objects.push_back(new Cube(glm::vec3(-3, yOffset*2, 0.0f), 1.0f, Glass));
+
+    objects.push_back(new Cube(glm::vec3(-3, yOffset, -1.0f), 1.0f, Glass));
+    objects.push_back(new Cube(glm::vec3(-3, yOffset*2, -1.0f), 1.0f, Glass));
+
+
     // Path
     for (int z = 3; z <= 5; ++z) {
         for (int x = 0; x < 2; ++x) {
@@ -373,6 +400,7 @@ int main(int argc, char* argv[]) {
     ImageLoader::loadImage("acaciaLeaves", "../textures/azalea_leaves.png");
     ImageLoader::loadImage("redStoneLamp", "../textures/redstone_lamp.png");
     ImageLoader::loadImage("basalt", "../textures/basalt.png");
+    ImageLoader::loadImage("glass", "../textures/pink_glass.png");
 
 
     // Create a window
