@@ -5,6 +5,8 @@ Utilizing raycasting techniques, I've constructed a vibrant Minecraft-inspired s
 [![Apple](https://img.shields.io/badge/C++-999999?style=for-the-badge&logo=cplusplus&logoColor=white&labelColor=yellow)]()
 
 ## Demo
+[Watch Demo Video](https://youtu.be/xTksqvGGFFM)
+
 
 ## Authors
 - [@Andrea-gt](https://github.com/Andrea-gt)
@@ -13,3 +15,4 @@ Utilizing raycasting techniques, I've constructed a vibrant Minecraft-inspired s
 - Skybox 🌌
 - 5+ Materials 🎨
 - Rotation and Movement 🔄🚶‍♂️🔍
+- Refraction in window panels 
