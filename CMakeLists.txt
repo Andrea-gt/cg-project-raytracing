@@ -12,7 +12,7 @@ file(GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS
         "${PROJECT_SOURCE_DIR}/src/*.cpp"
         )
 
-add_executable(${PROJECT_NAME} main.cpp ${SOURCE_FILES} cube.h)
+add_executable(${PROJECT_NAME} main.cpp ${SOURCE_FILES} cube.h skybox.h)
 
 target_include_directories(${PROJECT_NAME}
         PRIVATE

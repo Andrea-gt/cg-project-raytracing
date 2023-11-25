@@ -43,25 +43,26 @@ public:
             normal = calculateNormal(hitPoint, rayDirection, maxPoint, minPoint);
         }
 
+        glm::vec3 hitV = hitPoint - minPoint;
+        glm::vec2 texCoords;
 
-        int maxAxis = 0;
-        for (int i = 1; i < 3; ++i) {
-            if (fabs(normal[i]) > fabs(normal[maxAxis])) {
-                maxAxis = i; // Find the axis of the largest normal component
-            }
+        if (normal.x != 0) {
+            texCoords.x = hitV.z / sideLength;
+            texCoords.y = hitV.y / sideLength;
+        }
+        else if (normal.y != 0) {
+            texCoords.x = hitV.x / sideLength;
+            texCoords.y = hitV.z / sideLength;
+        }
+        else if (normal.z != 0)
+        {
+            texCoords.x = hitV.x / sideLength;
+            texCoords.y = hitV.y / sideLength;
         }
 
-        glm::vec2 texCoords;
-        switch (maxAxis) {
-            case 0: // x-axis
-                texCoords = glm::vec2(hitPoint.y - minPoint.y, hitPoint.z - minPoint.z) / sideLength;
-                break;
-            case 1: // y-axis
-                texCoords = glm::vec2(hitPoint.x - minPoint.x, hitPoint.z - minPoint.z) / sideLength;
-                break;
-            case 2: // z-axis
-                texCoords = glm::vec2(hitPoint.x - minPoint.x, hitPoint.y - minPoint.y) / sideLength;
-                break;
+        if (normal.x < 0 || normal.y < 0 || normal.z < 0)
+        {
+            texCoords = glm::vec2(1.0f) - texCoords;
         }
 
         return Intersect{true, tNear, hitPoint, normal, texCoords};

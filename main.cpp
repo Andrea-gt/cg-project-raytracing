@@ -7,21 +7,21 @@
 #include <string>
 #include <glm/glm.hpp>
 #include <vector>
-
 #include "color.h"
 #include "intersect.h"
 #include "object.h"
-#include "sphere.h"
 #include "light.h"
 #include "camera.h"
 #include "cube.h"
 #include "imageloader.h"
+#include "skybox.h"
 
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;
 const float ASPECT_RATIO = static_cast<float>(SCREEN_WIDTH) / static_cast<float>(SCREEN_HEIGHT);
 const int MAX_RECURSION = 3;
 const float BIAS = 0.0001f;
+Skybox skybox("../BG/skybox01.jpg");
 
 SDL_Renderer* renderer;
 std::vector<Object*> objects;
@@ -63,13 +63,13 @@ Color castRay(const glm::vec3& rayOrigin, const glm::vec3& rayDirection, const s
     }
 
     if (!intersect.isIntersecting || recursion == MAX_RECURSION) {
-        return Color(173, 216, 230);
+        return skybox.getColor(rayDirection);
     }
 
 
     glm::vec3 lightDir = glm::normalize(light.position - intersect.point);
     glm::vec3 viewDir = glm::normalize(rayOrigin - intersect.point);
-    glm::vec3 reflectDir = glm::reflect(-lightDir, intersect.normal); 
+    glm::vec3 reflectDir = glm::reflect(-lightDir, intersect.normal);
 
     float shadowIntensity = castShadow(intersect.point, lightDir, hitObject);
 
@@ -96,7 +96,7 @@ Color castRay(const glm::vec3& rayOrigin, const glm::vec3& rayDirection, const s
 
 
     mat.diffuse = ImageLoader::getPixelColor(hitObject->material.tKey, intersect.textureCoords.x * hitObject->material.tSize,
-                                             intersect.textureCoords.y * (hitObject->material.tSize - intersect.textureCoords.y)) * 0.6f;
+                                             hitObject->material.tSize - (hitObject->material.tSize * intersect.textureCoords.y)) * 0.6f;
     Color diffuseLight = mat.diffuse * light.intensity * diffuseLightIntensity * mat.albedo * shadowIntensity;
     Color specularLight = light.color * light.intensity * specLightIntensity * mat.specularAlbedo * shadowIntensity;
 
@@ -348,7 +348,7 @@ void render() {
             glm::vec3 rayDirection = glm::normalize(
                 cameraDir + cameraX * screenX + cameraY * screenY
             );
-           
+
             Color pixelColor = castRay(camera.position, rayDirection);
             /* Color pixelColor = castRay(glm::vec3(0,0,20), glm::normalize(glm::vec3(screenX, screenY, -1.0f))); */
 
