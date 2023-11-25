@@ -1,4 +1,4 @@
-# Minecraft - Raycasting :hibiscus:
+# Minecraft - Raytracing :hibiscus:
 Utilizing raycasting techniques, I've constructed a vibrant Minecraft-inspired scene, highlighting a pink house at its center, entirely crafted in C++. 
 
 ## Built Using 
