@@ -216,13 +216,13 @@ void setUp() {
     };
 
     Material Glass = {
-            Color(255, 255, 255),   // diffuse
-            1.0, // Matte or glossy
-            0.3, // Lower values do not reflect light
-            10.0f, //
-            0.0f, // Reflections
-            0.9f, // Transparency
-            1.5f,
+            Color(255,255,255),   // diffuse
+            1.0,
+            1450.3,
+            10.0f,
+            0.0f,
+            0.9f,
+            1.3f,
             128,
             "glass"
     };
